@@ -3,24 +3,16 @@ module github.com/jenkins-x/lighthouse-client
 require (
 	code.gitea.io/sdk/gitea v0.13.1-0.20201217044651-7ddbf1a0151e // indirect
 	github.com/Azure/go-autorest v14.2.0+incompatible
-	github.com/NYTimes/gziphandler v0.0.0-20170623195520-56545f4a5d46
 	github.com/bwmarrin/snowflake v0.0.0
-	github.com/cenkalti/backoff v2.2.1+incompatible
-	github.com/evanphx/json-patch v4.9.0+incompatible
 	github.com/go-stack/stack v1.8.0
 	github.com/google/go-cmp v0.5.4
 	github.com/gorilla/sessions v1.2.0
 	github.com/h2non/gock v1.0.9
-	github.com/hashicorp/go-multierror v1.1.0
-	github.com/hashicorp/golang-lru v0.5.4
 	github.com/jenkins-x/go-scm v1.5.209
-	github.com/mattn/go-zglob v0.0.1
-	github.com/onsi/ginkgo v1.14.1
-	github.com/onsi/gomega v1.10.2
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.8.0
 	github.com/satori/go.uuid v1.2.1-0.20180103174451-36e9d2ebbde5
-	github.com/shurcooL/githubv4 v0.0.0-20191102174205-af46314aec7b
+	github.com/shurcooL/githubv4 v0.0.0-20191102174205-af46314aec7b // indirect
 	github.com/sirupsen/logrus v1.6.0
 	github.com/stretchr/testify v1.6.1
 	github.com/tektoncd/pipeline v0.20.0

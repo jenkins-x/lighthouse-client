@@ -10,7 +10,7 @@ git clone -b k8s-upgrade-0.20.2-changes https://github.com/jstrachan/lighthouse.
 
 cp -r lighthouse/pkg lighthouse/go.* .
 
-rm -rf pkg/webhook pkg/foghorn pkg/keeper
+rm -rf pkg/webhook pkg/foghorn pkg/keeper pkg/plugins/*/*
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   find pkg/ -type f -exec sed -i "" 's,github.com/jenkins-x/lighthouse,github.com/jenkins-x/lighthouse-client,g' {} \;
@@ -20,7 +20,9 @@ else
   sed -i 's,github.com/jenkins-x/lighthouse,github.com/jenkins-x/lighthouse-client,g' go.*
 fi
 
-echo "done"
+go mod tidy
+
+make build test
 
 
 
