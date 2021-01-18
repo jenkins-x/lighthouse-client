@@ -5,10 +5,10 @@ echo "regenerating the source from git"
 rm -rf lighthouse pkg 
 
 # TODO replace with upstream when this PR merges: https://github.com/jenkins-x/lighthouse/pull/1207
-#git clone  https://github.com/jenkins-x/lighthouse.git
-git clone -b k8s-upgrade-0.20.2-changes https://github.com/jstrachan/lighthouse.git
+#git clone  https://github.com/jenkins-x/lighthouse.git upstream
+git clone -b k8s-upgrade-0.20.2-changes https://github.com/jstrachan/lighthouse.git upstream-clone
 
-cp -r lighthouse/pkg lighthouse/go.* .
+cp -r upstream-clone/pkg upstream-clone/go.* .
 
 rm -rf pkg/webhook pkg/foghorn pkg/keeper pkg/plugins/*/*
 
