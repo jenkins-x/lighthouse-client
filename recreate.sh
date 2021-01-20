@@ -2,6 +2,15 @@
 
 echo "regenerating the source from git"
 
+if [ -z "$GITHUB_ACTIONS" ]
+then
+  echo "not setting up git as not in a GitHub Action"
+else
+  echo "lets setup git"
+  git config --global user.name jenkins-x-bot-test
+  git config --global user.email jenkins-x@googlegroups.com
+fi
+
 rm -rf upstream-clone pkg
 
 # TODO replace with upstream when this PR merges: https://github.com/jenkins-x/lighthouse/pull/1215
@@ -34,9 +43,8 @@ then
 
     # echo lets download next version
     curl -L https://github.com/jenkins-x-plugins/jx-release-version/releases/download/v1.0.46/jx-release-version-linux-amd64.tar.gz | tar xzv
-    sudo mv jx-release-version /usr/local/bin
 
-    export TAG="v$(jx-release-version --use-git-tag)"
+    export TAG="v$(./jx-release-version --use-git-tag)"
     echo "tagging git with tag: $TAG"
     git tag $TAG
     git push --tags
