@@ -42,9 +42,12 @@ then
     git push
 
     # echo lets download next version
+    mkdir build
+    cd build
     curl -L https://github.com/jenkins-x-plugins/jx-release-version/releases/download/v1.0.46/jx-release-version-linux-amd64.tar.gz | tar xzv
+    cd ..
 
-    export TAG="v$(./jx-release-version --use-git-tag)"
+    export TAG="v$(./build/jx-release-version --use-git-tag)"
     echo "tagging git with tag: $TAG"
     git tag $TAG
     git push --tags
