@@ -29,8 +29,18 @@ if [ -z "$DISABLE_COMMIT" ]
 then
     echo "not commiting changes"
 else
-    git commit -a -m "chore: regenerated" || true
-    git push || true
+    git add *
+    git commit -a -m "chore: regenerated"
+    git push
+
+    # echo lets download next version
+    curl -L https://github.com/jenkins-x-plugins/jx-release-version/releases/download/v1.0.46/jx-release-version-linux-amd64.tar.gz | tar xzv
+    sudo mv jx-release-version /usr/local/bin
+
+    export TAG="v$(jx-release-version --use-git-tag)"
+    echo "tagging git with tag: $TAG"
+    git tag $TAG
+    git push --tags
 fi
 
 

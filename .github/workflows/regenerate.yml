@@ -11,7 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - env:
+      - uses: docker://golang:1.15
+        env:
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
         name: Regenerate the source code
-        run: ./recreate.sh
+        with:
+          entrypoint: ./recreate.sh
