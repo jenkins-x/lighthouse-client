@@ -1,13 +1,14 @@
 package inrepo
 
 import (
+	"io/ioutil"
+	"net/url"
+
 	"github.com/jenkins-x/lighthouse-client/pkg/filebrowser"
 	"github.com/jenkins-x/lighthouse-client/pkg/util"
 	"github.com/pkg/errors"
 	tektonv1beta1 "github.com/tektoncd/pipeline/pkg/apis/pipeline/v1beta1"
-	"io/ioutil"
 	v1 "k8s.io/api/core/v1"
-	"net/url"
 )
 
 // UsesResolver resolves the `uses:` URI syntax
@@ -83,6 +84,7 @@ func (r *UsesResolver) GetData(path string, ignoreNotExist bool) ([]byte, error)
 				return nil, nil
 			}
 		}
+		/* #nosec */
 		data, err := ioutil.ReadFile(path)
 		if err != nil {
 			return nil, errors.Wrapf(err, "failed to read file %s", path)
