@@ -7,8 +7,8 @@ then
   echo "not setting up git as not in a GitHub Action"
 else
   echo "lets setup git"
-  git config --global user.name jenkins-x-bot-test
-  git config --global user.email jenkins-x@googlegroups.com
+  git config user.name github-actions
+  git config user.email github-actions@github.com
 fi
 
 rm -rf upstream-clone pkg
