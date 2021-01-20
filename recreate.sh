@@ -2,7 +2,7 @@
 
 echo "regenerating the source from git"
 
-rm -rf lighthouse pkg 
+rm -rf upstream-clone pkg
 
 # TODO replace with upstream when this PR merges: https://github.com/jenkins-x/lighthouse/pull/1215
 #git clone  https://github.com/jenkins-x/lighthouse.git upstream
