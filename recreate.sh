@@ -4,9 +4,9 @@ echo "regenerating the source from git"
 
 rm -rf lighthouse pkg 
 
-# TODO replace with upstream when this PR merges: https://github.com/jenkins-x/lighthouse/pull/1207
+# TODO replace with upstream when this PR merges: https://github.com/jenkins-x/lighthouse/pull/1215
 #git clone  https://github.com/jenkins-x/lighthouse.git upstream
-git clone -b k8s-upgrade-0.20.2-changes https://github.com/jstrachan/lighthouse.git upstream-clone
+git clone -b tekton-actions https://github.com/jstrachan/lighthouse.git upstream-clone
 
 cp -r upstream-clone/pkg upstream-clone/go.* .
 
@@ -23,6 +23,18 @@ fi
 go mod tidy
 
 make build test
+
+
+if [ -z "$DISABLE_COMMIT" ]
+then
+    echo "not commiting changes"
+else
+    git commit -a -m "chore: regenerated" || true
+    git push || true
+fi
+
+
+
 
 
 
