@@ -23,8 +23,7 @@ fi
 go mod tidy
 
 # TODO builds fail inside GHA for now?
-make build
-#make build test
+#make build
 
 
 if [ -z "$DISABLE_COMMIT" ]
