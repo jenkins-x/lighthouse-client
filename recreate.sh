@@ -28,8 +28,6 @@ go mod tidy
 
 if [ -z "$DISABLE_COMMIT" ]
 then
-    echo "not commiting changes"
-else
     git add *
     git commit -a -m "chore: regenerated"
     git push
@@ -42,6 +40,8 @@ else
     echo "tagging git with tag: $TAG"
     git tag $TAG
     git push --tags
+else
+    echo "disabled commiting changes"
 fi
 
 
