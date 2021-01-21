@@ -35,6 +35,9 @@ func TestLoadPipelineRunTest(t *testing.T) {
 		LocalFileResolve: true,
 	}
 
+	// lets use a custom version stream sha
+	os.Setenv("LIGHTHOUSE_VERSIONSTREAM_JENKINS_X_JX3_PIPELINE_CATALOG", "myversionstreamref")
+
 	// make it easy to run a specific test only
 	runTestName := os.Getenv("TEST_NAME")
 	for _, f := range fs {
