@@ -35,10 +35,12 @@ func TestMergeConfig(t *testing.T) {
 		},
 	}
 
+	fileBrowsers, err := filebrowser.NewFileBrowsers(filebrowser.GitHubURL, filebrowser.NewFileBrowserFromScmClient(scmProvider))
+	require.NoError(t, err, "failed to create filebrowsers")
+
 	cfg := &config.Config{}
 	pluginCfg := &plugins.Configuration{}
-	fileBrowser := filebrowser.NewFileBrowserFromScmClient(scmProvider)
-	flag, err := MergeTriggers(cfg, pluginCfg, fileBrowser, owner, repo, ref)
+	flag, err := MergeTriggers(cfg, pluginCfg, fileBrowsers, NewResolverCache(), owner, repo, ref)
 	require.NoError(t, err, "failed to merge configs")
 	assert.True(t, flag, "did not return merge flag")
 
@@ -52,13 +54,15 @@ func TestMergeConfig(t *testing.T) {
 func TestInvalidConfigs(t *testing.T) {
 	scmClient, _ := fake.NewDefault()
 	scmProvider := scmprovider.ToClient(scmClient, "my-bot")
-	fileBrowser := filebrowser.NewFileBrowserFromScmClient(scmProvider)
+
+	fileBrowsers, err := filebrowser.NewFileBrowsers(filebrowser.GitHubURL, filebrowser.NewFileBrowserFromScmClient(scmProvider))
+	require.NoError(t, err, "failed to create filebrowsers")
 
 	invalidRepos := []string{"duplicate-presubmit", "duplicate-postsubmit"}
 	for _, repo := range invalidRepos {
 		owner := "myorg"
 		ref := "master"
-		_, err := LoadTriggerConfig(fileBrowser, owner, repo, ref)
+		_, err := LoadTriggerConfig(fileBrowsers, NewResolverCache(), owner, repo, ref)
 		require.Errorf(t, err, "should have failed to load triggers from repo %s/%s with ref %s", owner, repo, ref)
 
 		t.Logf("got expected error loading invalid configuration on repo %s of: %s", repo, err.Error())
@@ -75,7 +79,7 @@ func TestLoadJobFromURL(t *testing.T) {
 		File("test_data/load_url/foo.yaml")
 
 	j := &job.Base{}
-	err := loadJobBaseFromSourcePath(nil, j, "", "", "https://raw.githubusercontent.com/rawlingsj/test/master/foo.yaml", "")
+	err := loadJobBaseFromSourcePath(nil, NewResolverCache(), j, "", "", "https://raw.githubusercontent.com/rawlingsj/test/master/foo.yaml", "")
 	assert.NoError(t, err, "should not have an error returned")
 	assert.Equal(t, "jenkinsxio/chuck:0.0.1", j.PipelineRunSpec.PipelineSpec.Tasks[0].TaskSpec.Steps[0].Image, "image name for task is not correct")
 }

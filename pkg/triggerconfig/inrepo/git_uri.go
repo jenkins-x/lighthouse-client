@@ -3,6 +3,8 @@ package inrepo
 import (
 	"strings"
 
+	"github.com/jenkins-x/lighthouse-client/pkg/filebrowser"
+
 	"github.com/jenkins-x/go-scm/scm"
 
 	"github.com/pkg/errors"
@@ -10,6 +12,7 @@ import (
 
 // GitURI the output of parsing Git URIs
 type GitURI struct {
+	Server     string
 	Owner      string
 	Repository string
 	Path       string
@@ -40,8 +43,17 @@ func ParseGitURI(text string) (*GitURI, error) {
 	case 3:
 		path = parts[2]
 	}
+	owner := parts[0]
+
+	server := filebrowser.GitHub
+	serverOwner := strings.SplitN(owner, ":", 2)
+	if len(serverOwner) > 1 {
+		server = serverOwner[0]
+		owner = serverOwner[1]
+	}
 	return &GitURI{
-		Owner:      parts[0],
+		Server:     server,
+		Owner:      owner,
 		Repository: parts[1],
 		Path:       path,
 		SHA:        sha,
@@ -62,5 +74,9 @@ func (u *GitURI) String() string {
 	if sha == "" {
 		sha = "head"
 	}
-	return path + "@" + sha
+	prefix := ""
+	if u.Server != "" && u.Server != filebrowser.GitHub {
+		prefix = u.Server + ":"
+	}
+	return prefix + path + "@" + sha
 }
