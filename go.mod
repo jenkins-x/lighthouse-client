@@ -7,7 +7,7 @@ require (
 	github.com/google/go-cmp v0.5.4
 	github.com/gorilla/sessions v1.2.0
 	github.com/h2non/gock v1.0.9
-	github.com/jenkins-x/go-scm v1.5.215
+	github.com/jenkins-x/go-scm v1.5.216
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.8.0
 	github.com/satori/go.uuid v1.2.1-0.20180103174451-36e9d2ebbde5
