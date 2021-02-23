@@ -1,21 +1,13 @@
-module github.com/jenkins-x/lighthouse
+module github.com/jenkins-x/lighthouse-client
 
 require (
 	github.com/Azure/go-autorest v14.2.0+incompatible
-	github.com/NYTimes/gziphandler v0.0.0-20170623195520-56545f4a5d46 // indirect
 	github.com/bwmarrin/snowflake v0.0.0
-	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
-	github.com/evanphx/json-patch v4.9.0+incompatible // indirect
 	github.com/go-stack/stack v1.8.0
 	github.com/google/go-cmp v0.5.4
 	github.com/gorilla/sessions v1.2.0
 	github.com/h2non/gock v1.0.9
-	github.com/hashicorp/go-multierror v1.1.0 // indirect
-	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/jenkins-x/go-scm v1.5.223
-	github.com/mattn/go-zglob v0.0.1 // indirect
-	github.com/onsi/ginkgo v1.14.1 // indirect
-	github.com/onsi/gomega v1.10.2 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.8.0
 	github.com/satori/go.uuid v1.2.1-0.20180103174451-36e9d2ebbde5
