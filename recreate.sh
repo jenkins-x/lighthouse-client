@@ -21,10 +21,10 @@ rm -rf pkg/webhook pkg/foghorn pkg/keeper pkg/plugins/*/*
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   find pkg/ -type f -exec sed -i "" 's,github.com/jenkins-x/lighthouse,github.com/jenkins-x/lighthouse-client,g' {} \;
-  #sed -i ""  's,github.com/jenkins-x/lighthouse,github.com/jenkins-x/lighthouse-client,g' go.*
+  sed -i ""  's,github.com/jenkins-x/lighthouse,github.com/jenkins-x/lighthouse-client,g' go.*
 else
   find pkg/ -type f -exec sed -i 's,github.com/jenkins-x/lighthouse,github.com/jenkins-x/lighthouse-client,g' {} \;
-  #sed -i 's,github.com/jenkins-x/lighthouse,github.com/jenkins-x/lighthouse-client,g' go.*
+  sed -i 's,github.com/jenkins-x/lighthouse,github.com/jenkins-x/lighthouse-client,g' go.*
 fi
 
 go mod tidy
