@@ -13,7 +13,7 @@ fi
 
 rm -rf upstream-clone pkg
 
-git clone -b tekton-actions https://github.com/jenkins-x/lighthouse.git upstream-clone
+git clone https://github.com/jenkins-x/lighthouse.git upstream-clone
 
 cp -r upstream-clone/pkg upstream-clone/go.* .
 
