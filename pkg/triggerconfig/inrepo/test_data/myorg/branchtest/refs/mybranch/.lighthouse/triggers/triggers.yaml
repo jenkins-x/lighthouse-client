@@ -1,0 +1,22 @@
+apiVersion: config.lighthouse.jenkins-x.io/v1alpha1
+kind: TriggerConfig
+spec:
+  presubmits:
+  - name: lint
+    context: "lint"
+    always_run: true
+    optional: false
+    trigger: "(?:/lint|/relint)"
+    rerun_command: "/relint"
+    agent: tekton-pipeline
+  - name: newthingy
+    context: "newthingy"
+    always_run: true
+    optional: false
+    trigger: "(?:/newthingy|/renewthingy)"
+    rerun_command: "/renewthingy"
+    agent: tekton-pipeline
+  postsubmits:
+  - name: release
+    context: "release"
+    agent: tekton-pipeline
