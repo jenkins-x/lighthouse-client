@@ -13,9 +13,7 @@ fi
 
 rm -rf upstream-clone pkg
 
-# TODO replace with upstream when this PR merges: https://github.com/jenkins-x/lighthouse/pull/1215
-#git clone  https://github.com/jenkins-x/lighthouse.git upstream
-git clone -b tekton-actions https://github.com/jstrachan/lighthouse.git upstream-clone
+git clone -b tekton-actions https://github.com/jenkins-x/lighthouse.git upstream-clone
 
 cp -r upstream-clone/pkg upstream-clone/go.* .
 
