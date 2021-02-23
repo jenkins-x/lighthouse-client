@@ -1,30 +1,4 @@
-module github.com/jenkins-x/lighthouse-client
-
-require (
-	github.com/Azure/go-autorest v14.2.0+incompatible
-	github.com/bwmarrin/snowflake v0.0.0
-	github.com/go-stack/stack v1.8.0
-	github.com/google/go-cmp v0.5.4
-	github.com/gorilla/sessions v1.2.0
-	github.com/h2non/gock v1.0.9
-	github.com/jenkins-x/go-scm v1.5.218
-	github.com/pkg/errors v0.9.1
-	github.com/prometheus/client_golang v1.8.0
-	github.com/satori/go.uuid v1.2.1-0.20180103174451-36e9d2ebbde5
-	github.com/shurcooL/githubv4 v0.0.0-20191102174205-af46314aec7b // indirect
-	github.com/sirupsen/logrus v1.6.0
-	github.com/stretchr/testify v1.6.1
-	github.com/tektoncd/pipeline v0.20.0
-	golang.org/x/oauth2 v0.0.0-20201208152858-08078c50e5b5
-	gopkg.in/robfig/cron.v2 v2.0.0-20150107220207-be2e0b0deed5
-	k8s.io/api v0.20.2
-	k8s.io/apimachinery v0.20.2
-	k8s.io/client-go v0.20.2
-	k8s.io/utils v0.0.0-20201110183641-67b214c5f920
-	knative.dev/pkg v0.0.0-20210107022335-51c72e24c179
-	sigs.k8s.io/controller-runtime v0.8.0
-	sigs.k8s.io/yaml v1.2.0
-)
+module github.com/jenkins-x/lighthouse-client-client
 
 replace (
 	github.com/tektoncd/pipeline => github.com/jenkins-x/pipeline v0.3.2-0.20210118090417-1e821d85abf6
