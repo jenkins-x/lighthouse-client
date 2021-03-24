@@ -20,7 +20,9 @@ import (
 	"errors"
 	"fmt"
 	"net/url"
+	"os"
 	"path"
+	"strings"
 )
 
 // RemoteResolverFactory knows how to construct remote resolvers for
@@ -85,7 +87,8 @@ type httpResolverFactory struct {
 // for the repository.
 func (f *httpResolverFactory) CentralRemote(org, repo string) RemoteResolver {
 	return HTTPResolver(func() (*url.URL, error) {
-		return &url.URL{Scheme: applyDefaultScheme(f.scheme), Host: f.host, Path: fmt.Sprintf("%s/%s", org, repo)}, nil
+		path := f.gitClonePath(org, repo)
+		return &url.URL{Scheme: applyDefaultScheme(f.scheme), Host: f.host, Path: path}, nil
 	}, f.username, f.token)
 }
 
@@ -96,12 +99,28 @@ func (f *httpResolverFactory) PublishRemote(_, repo string) RemoteResolver {
 		if f.username == nil {
 			return nil, errors.New("username not configured, no publish repo available")
 		}
-		o, err := f.username()
+		org, err := f.username()
 		if err != nil {
 			return nil, err
 		}
-		return &url.URL{Scheme: applyDefaultScheme(f.scheme), Host: f.host, Path: fmt.Sprintf("%s/%s", o, repo)}, nil
+		path := f.gitClonePath(org, repo)
+		return &url.URL{Scheme: applyDefaultScheme(f.scheme), Host: f.host, Path: path}, nil
 	}, f.username, f.token)
+}
+
+func (f *httpResolverFactory) gitClonePath(org string, repo string) string {
+	path := fmt.Sprintf("%s/%s", org, repo)
+	if f.host != "github.com" {
+		cloneSuffix := os.Getenv("GIT_CLONE_PATH_PREFIX")
+		if cloneSuffix != "" {
+			cloneSuffix = strings.TrimPrefix(cloneSuffix, "/")
+			cloneSuffix = strings.TrimSuffix(cloneSuffix, "/")
+		}
+		if cloneSuffix != "" {
+			path = fmt.Sprintf("%s/%s", cloneSuffix, path)
+		}
+	}
+	return path
 }
 
 func applyDefaultScheme(scheme string) string {
