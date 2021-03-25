@@ -4,6 +4,33 @@ metadata:
   creationTimestamp: null
   name: release
 spec:
+  params:
+  - name: BUILD_ID
+    value: ""
+  - name: JOB_NAME
+    value: ""
+  - name: JOB_SPEC
+    value: ""
+  - name: JOB_TYPE
+    value: ""
+  - name: PULL_BASE_REF
+    value: ""
+  - name: PULL_BASE_SHA
+    value: ""
+  - name: PULL_NUMBER
+    value: ""
+  - name: PULL_PULL_REF
+    value: ""
+  - name: PULL_PULL_SHA
+    value: ""
+  - name: PULL_REFS
+    value: ""
+  - name: REPO_NAME
+    value: ""
+  - name: REPO_OWNER
+    value: ""
+  - name: REPO_URL
+    value: ""
   pipelineSpec:
     params:
     - description: the unique build number
@@ -188,7 +215,7 @@ spec:
           script: |
             #!/usr/bin/env sh
             jx-release-version > VERSION
-        - image: ghcr.io/jenkins-x/jx-boot:3.1.334
+        - image: ghcr.io/jenkins-x/jx-boot:3.1.335
           name: jx-variables
           resources: {}
           script: |
@@ -236,7 +263,7 @@ spec:
             git commit -a -m "chore: release $VERSION" --allow-empty
             git tag -fa v$VERSION -m "Release version $VERSION"
             git push --force origin v$VERSION
-        - image: ghcr.io/jenkins-x/jx-boot:3.1.334
+        - image: ghcr.io/jenkins-x/jx-boot:3.1.335
           name: promote-helm-release
           resources: {}
           script: |
@@ -257,7 +284,20 @@ spec:
           secret:
             optional: true
             secretName: jenkins-release-gpg
+        workspaces:
+        - description: The git repo will be cloned onto the volume backing this workspace
+          mountPath: /workspace
+          name: output
+      workspaces:
+      - name: output
+        workspace: output
+    workspaces:
+    - description: The git repo will be cloned onto the volume backing this workspace
+      name: output
   podTemplate: {}
   serviceAccountName: tekton-bot
   timeout: 240h0m0s
+  workspaces:
+  - emptyDir: {}
+    name: output
 status: {}

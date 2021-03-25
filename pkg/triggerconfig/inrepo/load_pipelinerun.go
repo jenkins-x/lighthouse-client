@@ -1,6 +1,7 @@
 package inrepo
 
 import (
+	"context"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -280,6 +281,7 @@ func processUsesSteps(resolver *UsesResolver, prs *tektonv1beta1.PipelineRun) er
 				loc := &UseLocation{
 					PipelineRunSpec: &prs.Spec,
 					PipelineSpec:    prs.Spec.PipelineSpec,
+					PipelineTask:    pt,
 					TaskName:        pt.Name,
 					TaskSpec:        ts,
 				}
@@ -447,6 +449,16 @@ func ConvertTaskToPipelineRun(from *tektonv1beta1.Task, message string, defaultV
 	//prs.Spec.Resources = fs.Resources
 	prs.Spec.Workspaces = ToWorkspaceBindings(fs.Workspaces)
 	defaultValues.Apply(prs)
+
+	// lets copy the params from the task -> pipeline -> pipelinerun
+	loc := &UseLocation{
+		PipelineRunSpec: &prs.Spec,
+		PipelineSpec:    pipelineSpec,
+		TaskName:        from.Name,
+		TaskRunSpec:     nil,
+		TaskSpec:        fs,
+	}
+	UseParametersAndResults(context.TODO(), loc, fs)
 	return prs, nil
 }
 
