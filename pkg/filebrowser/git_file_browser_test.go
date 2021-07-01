@@ -1,7 +1,8 @@
-package filebrowser
+package filebrowser_test
 
 import (
 	"fmt"
+	"github.com/jenkins-x/lighthouse-client/pkg/filebrowser"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -19,7 +20,9 @@ func TestGitFileBrowser(t *testing.T) {
 
 	cf, err := git.NewClientFactory()
 	require.NoError(t, err, "failed to create git client factory")
-	fb := NewFileBrowserFromGitClient(cf)
+	fb := filebrowser.NewFileBrowserFromGitClient(cf)
+
+	fc := filebrowser.NewFetchCache()
 
 	owner := "jenkins-x-quickstarts"
 	repo := "node-http"
@@ -35,14 +38,14 @@ func TestGitFileBrowser(t *testing.T) {
 		return message() + " file " + fileName
 	}
 
-	files, err := fb.ListFiles(owner, repo, path, ref)
+	files, err := fb.ListFiles(owner, repo, path, ref, fc)
 	require.NoError(t, err, "failed to list files "+message())
 	assert.NotEmpty(t, files, "should not be empty")
 	for _, f := range files {
 		t.Logf("file %s type %s\n", f.Name, f.Type)
 	}
 
-	data, err := fb.GetFile(owner, repo, fileName, ref)
+	data, err := fb.GetFile(owner, repo, fileName, ref, fc)
 	require.NoError(t, err, "failed to get file "+fileMessage())
 	text := string(data)
 
@@ -55,7 +58,7 @@ func TestGitFileBrowser(t *testing.T) {
 	ref = ""
 	fileName = "package.json"
 
-	data, err = fb.GetFile(owner, repo, fileName, ref)
+	data, err = fb.GetFile(owner, repo, fileName, ref, fc)
 	require.NoError(t, err, "failed to get file "+fileMessage())
 	text = string(data)
 
@@ -64,7 +67,7 @@ func TestGitFileBrowser(t *testing.T) {
 
 	// switch back to a old sha
 	ref = "5067522b7ed292bef46570ffe3ab75d3a5428769"
-	files, err = fb.ListFiles(owner, repo, path, ref)
+	files, err = fb.ListFiles(owner, repo, path, ref, fc)
 	require.NoError(t, err, "failed to list files "+message())
 	assert.NotEmpty(t, files, "should not be empty")
 	for _, f := range files {
@@ -74,7 +77,7 @@ func TestGitFileBrowser(t *testing.T) {
 	assertNoScmFileExists(t, files, fileName, message())
 
 	ref = ""
-	files, err = fb.ListFiles(owner, repo, path, ref)
+	files, err = fb.ListFiles(owner, repo, path, ref, fc)
 	require.NoError(t, err, "failed to list files "+message())
 	assertScmFileExists(t, files, fileName, message())
 }
@@ -105,6 +108,8 @@ func TestGitFileBrowser_Clone_CreateTag_FetchRef(t *testing.T) {
 	require.NoError(t, err, "failed to find git binary")
 	fmt.Println(baseDir)
 
+	fc := filebrowser.NewFetchCache()
+
 	defer os.RemoveAll(baseDir)
 
 	repoDir := filepath.Join(baseDir, "org", "repo")
@@ -134,9 +139,9 @@ func TestGitFileBrowser_Clone_CreateTag_FetchRef(t *testing.T) {
 
 	cf, err := git.NewLocalClientFactory(baseDir, userGetter, censor)
 	require.NoError(t, err, "failed to create git client factory")
-	fb := NewFileBrowserFromGitClient(cf)
+	fb := filebrowser.NewFileBrowserFromGitClient(cf)
 
-	files, err := fb.ListFiles("org", "repo", "", "master")
+	files, err := fb.ListFiles("org", "repo", "", "master", fc)
 	require.NoError(t, err, "failed to list files")
 
 	require.True(t, len(files) == 1, "exepecting 1 file")
@@ -154,12 +159,26 @@ func TestGitFileBrowser_Clone_CreateTag_FetchRef(t *testing.T) {
 	_, err = executor.Run("tag", "v0.0.1")
 	require.NoError(t, err, "failed to create v0.0.1 tag")
 
-	files, err = fb.ListFiles("org", "repo", "", "v0.0.1")
+	files, err = fb.ListFiles("org", "repo", "", "v0.0.1", fc)
 	require.NoError(t, err, "failed to lst files in v0.0.1 tag")
 	require.True(t, len(files) == 1, "exepecting 1 file")
 	require.Equal(t, files[0].Name, "README.md")
 
-	data, err := fb.GetFile("org", "repo", "README.md", "v0.0.1")
+	data, err := fb.GetFile("org", "repo", "README.md", "v0.0.1", fc)
 	require.NoError(t, err, "failed to lst files in v0.0.1 tag")
 	require.Equal(t, string(data), "README-update-1")
+}
+
+func TestIsSHA(t *testing.T) {
+	testCases := map[string]bool{
+		"de6cc99": true,
+		"de6cc99a6de8ca34b8884fcc05945bd30033f330": true,
+		"main":    false,
+		"123_567": false,
+	}
+
+	for ref, expected := range testCases {
+		got := filebrowser.IsSHA(ref)
+		assert.Equal(t, expected, got, "for ref: %s", ref)
+	}
 }
