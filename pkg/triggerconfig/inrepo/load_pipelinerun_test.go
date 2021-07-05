@@ -8,9 +8,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/jenkins-x/go-scm/scm/driver/fake"
+	fbfake "github.com/jenkins-x/lighthouse-client/pkg/filebrowser/fake"
+
 	"github.com/jenkins-x/lighthouse-client/pkg/filebrowser"
-	"github.com/jenkins-x/lighthouse-client/pkg/scmprovider"
 	"github.com/jenkins-x/lighthouse-client/pkg/util"
 
 	"github.com/stretchr/testify/assert"
@@ -31,10 +31,7 @@ func TestLoadPipelineRunTest(t *testing.T) {
 	fs, err := ioutil.ReadDir(sourceDir)
 	require.NoError(t, err, "failed to read source Dir %s", sourceDir)
 
-	scmClient, _ := fake.NewDefault()
-	scmProvider := scmprovider.ToClient(scmClient, "my-bot")
-
-	fileBrowser := filebrowser.NewFileBrowserFromScmClient(scmProvider)
+	fileBrowser := fbfake.NewFakeFileBrowser(filepath.Join("test_data"), true)
 
 	// lets use a custom version stream sha
 	os.Setenv("LIGHTHOUSE_VERSIONSTREAM_JENKINS_X_JX3_PIPELINE_CATALOG", "myversionstreamref")
