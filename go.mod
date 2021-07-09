@@ -7,7 +7,7 @@ require (
 	github.com/google/go-cmp v0.5.4
 	github.com/gorilla/sessions v1.2.0
 	github.com/h2non/gock v1.0.9
-	github.com/jenkins-x/go-scm v1.10.7
+	github.com/jenkins-x/go-scm v1.10.8
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.8.0
 	github.com/shurcooL/githubv4 v0.0.0-20191102174205-af46314aec7b // indirect
@@ -27,7 +27,7 @@ require (
 
 replace (
 	// lets override the go-scm version from tektoncd
-	github.com/jenkins-x/go-scm => github.com/jenkins-x/go-scm v1.10.7
+	github.com/jenkins-x/go-scm => github.com/jenkins-x/go-scm v1.10.8
 
 	github.com/tektoncd/pipeline => github.com/jenkins-x/pipeline v0.3.2-0.20210223153617-0d1186b27496
 
