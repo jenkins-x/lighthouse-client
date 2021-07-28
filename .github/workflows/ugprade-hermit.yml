@@ -12,6 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: docker://golang:1.15
+        env:
+          GIT_USER: jenkins-x-bot-test
+          GIT_TOKEN: ${{ secrets.GIT_BOT_TOKEN }}
         name: Upgrade hermit
         with:
           entrypoint: ./.github/workflows/upgrade-hermit.sh

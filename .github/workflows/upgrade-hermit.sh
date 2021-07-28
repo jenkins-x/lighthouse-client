@@ -25,7 +25,7 @@ for r in "${repos[@]}"
 do
   echo "upgrading repository https://github.com/jx3-gitops-repositories/$r"
   cd $TMPDIR
-  git clone https://github.com/jx3-gitops-repositories/$r.git
+  git clone https://$GIT_USER:$GIT_TOKEN@github.com/jx3-gitops-repositories/$r.git
   cd "$r"
 
   source ./bin/activate-hermit
