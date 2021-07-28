@@ -28,7 +28,8 @@ do
   git clone https://github.com/jx3-gitops-repositories/$r.git
   cd "$r"
 
-  ./bin/hermit env --raw >> $GITHUB_ENV
+  ./bin/activate-hermit
+  #./bin/hermit env --raw >> $GITHUB_ENV
   hermit version
 
   echo ""
