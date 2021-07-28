@@ -12,6 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: docker://golang:1.15
-        name: Regenerate the source code
+        name: Upgrade hermit
         with:
           entrypoint: ./.github/workflows/hermit.sh
