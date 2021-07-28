@@ -28,16 +28,17 @@ do
   git clone https://github.com/jx3-gitops-repositories/$r.git
   cd "$r"
 
-  echo "synchronising hermit"
-
   ./bin/hermit env --raw >> $GITHUB_ENV
+  hermit version
+
+  echo "synchronising hermit"
   hermit sync
 
-  echo "upgrading the jx version"
-  hermit upgrade jx
+  echo "upgrading the hermit versions"
+  hermit upgrade
 
   git add * || true
-  git commit -a -m "chore: upgrade jx version" || true
+  git commit -a -m "chore: upgrade hermit versions" || true
   git push || true
 done
 
