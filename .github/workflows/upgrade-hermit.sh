@@ -31,6 +31,10 @@ do
   ./bin/hermit env --raw >> $GITHUB_ENV
   hermit version
 
+  echo ""
+  echo "hermit version:"
+  hermit version
+
   echo "synchronising hermit"
   hermit sync
 
