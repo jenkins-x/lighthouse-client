@@ -7,8 +7,8 @@ then
   echo "not setting up git as not in a GitHub Action"
 else
   echo "lets setup git"
-  git config user.name github-actions
-  git config user.email github-actions@github.com
+  git config --global user.name github-actions
+  git config --global user.email github-actions@github.com
 fi
 
 declare -a repos=(
