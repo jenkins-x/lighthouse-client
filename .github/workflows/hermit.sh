@@ -15,6 +15,8 @@ declare -a repos=(
   "jx3-kind"
 )
 
+export PATH=$PATH:/github/home/bin
+
 export TMPDIR=/tmp/jx3-gitops-promote
 rm -rf $TMPDIR
 mkdir -p $TMPDIR
