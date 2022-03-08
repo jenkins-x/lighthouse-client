@@ -7,7 +7,7 @@ require (
 	github.com/google/go-cmp v0.5.6
 	github.com/gorilla/sessions v1.2.0
 	github.com/h2non/gock v1.0.9
-	github.com/jenkins-x/go-scm v1.11.3
+	github.com/jenkins-x/go-scm v1.11.4
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.11.0
 	github.com/shurcooL/githubv4 v0.0.0-20191102174205-af46314aec7b // indirect
@@ -31,7 +31,7 @@ replace (
 	github.com/Azure/azure-sdk-for-go => github.com/Azure/azure-sdk-for-go v38.2.0+incompatible
 
 	// lets override the go-scm version from tektoncd
-	github.com/jenkins-x/go-scm => github.com/jenkins-x/go-scm v1.11.3
+	github.com/jenkins-x/go-scm => github.com/jenkins-x/go-scm v1.11.4
 
 	// for the PipelineRun debug fix see: https://github.com/tektoncd/pipeline/pull/4145
 	github.com/tektoncd/pipeline => github.com/jstrachan/pipeline v0.21.1-0.20210811150720-45a86a5488af
