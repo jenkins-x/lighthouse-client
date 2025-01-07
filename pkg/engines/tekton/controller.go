@@ -155,7 +155,7 @@ func (r *LighthouseJobReconciler) Reconcile(ctx context.Context, req ctrl.Reques
 			}
 		}
 	} else if len(pipelineRunList.Items) == 1 {
-		// if pipeline run exists, create it and update status
+		// if pipeline run exists, create pipelineactivity and update lighthousejob status
 		pipelineRun := pipelineRunList.Items[0]
 		if !r.disableLogging {
 			r.logger.Infof("Reconcile PipelineRun %+v", pipelineRun)
