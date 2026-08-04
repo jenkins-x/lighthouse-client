@@ -13,7 +13,7 @@ require (
 	github.com/h2non/gock v1.2.0
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/hashicorp/golang-lru v1.0.2
-	github.com/jenkins-x/go-scm v1.15.32
+	github.com/jenkins-x/go-scm v1.15.36
 	github.com/mattn/go-zglob v0.0.6
 	github.com/onsi/ginkgo v1.16.5
 	github.com/onsi/gomega v1.42.0
@@ -26,7 +26,7 @@ require (
 	golang.org/x/oauth2 v0.36.0
 	gopkg.in/robfig/cron.v2 v2.0.0-20150107220207-be2e0b0deed5
 	k8s.io/api v0.36.2
-	k8s.io/apimachinery v0.36.2
+	k8s.io/apimachinery v0.36.3
 	k8s.io/client-go v0.36.2
 	k8s.io/utils v0.0.0-20260617174310-a95e086a2553
 	knative.dev/pkg v0.0.0-20260615201544-6300c57a9e78
@@ -41,7 +41,7 @@ require (
 	github.com/42wim/httpsig v1.2.4 // indirect
 	github.com/antlr4-go/antlr/v4 v4.13.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
-	github.com/bluekeyes/go-gitdiff v0.8.1 // indirect
+	github.com/bluekeyes/go-gitdiff v0.9.0 // indirect
 	github.com/cenkalti/backoff/v5 v5.0.3 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
